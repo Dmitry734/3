@@ -1,0 +1,16 @@
+.container {
+    text-align: center;
+}
+
+.keyboard {
+    display: none;
+    /* Изначально скрываем клавиатуру */
+    margin-top: 20px;
+}
+
+.keyboard button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}

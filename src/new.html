@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cron String Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            margin: 5px;
+            width: 200px;
+        }
+
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <input type="radio" id="enableInput" name="inputState" checked>
+    <label for="enableInput">Enable Input</label>
+    <input type="radio" id="disableInput" name="inputState">
+    <label for="disableInput">Disable Input</label>
+    <input type="radio" id="enableInputField1" name="inputState">
+    <label for="enableInputField1">Enable Input Field 1</label>
+
+    <br><br>
+
+    <input type="text" id="inputField1" placeholder="Enter time (HH:MM:SS)"
+        pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]">
+    <button onclick="generateCron()">Save</button>
+    <input type="text" id="inputField2" placeholder="Cron string" readonly>
+
+    <script>
+        function generateCron() {
+            const inputField1 = document.getElementById('inputField1');
+            const inputField2 = document.getElementById('inputField2');
+            const timeValue = inputField1.value;
+
+            // Проверяем, что введенная строка соответствует формату HH:MM:SS
+            const timePattern = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+            if (!timePattern.test(timeValue)) {
+                alert('Please enter time in format HH:MM:SS');
+                return;
+            }
+
+            // Разбиваем введенную строку времени на часы, минуты и секунды
+            const [hours, minutes, seconds] = timeValue.split(':');
+
+            // Создаем cron строку
+            const cronString = `${parseInt(seconds)} ${parseInt(minutes)} ${parseInt(hours)} * * *`;
+
+            // Устанавливаем cron строку во второе поле ввода
+            inputField2.value = cronString;
+        }
+
+        document.getElementById('enableInput').addEventListener('change', function () {
+            document.getElementById('inputField1').disabled = !this.checked;
+            document.getElementById('inputField2').disabled = !this.checked;
+        });
+
+        document.getElementById('disableInput').addEventListener('change', function () {
+            document.getElementById('inputField1').disabled = this.checked;
+            document.getElementById('inputField2').disabled = this.checked;
+        });
+
+        document.getElementById('enableInputField1').addEventListener('change', function () {
+            document.getElementById('inputField1').disabled = !this.checked;
+            document.getElementById('inputField2').disabled = this.checked;
+        });
+    </script>
+
+</body>
+
+</html>
