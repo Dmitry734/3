@@ -277,7 +277,7 @@ export default function Menu() {
             <br />
             <input
 
-                type="hidden"
+                type="text"
                 value={cronString}
 
                 readOnly
